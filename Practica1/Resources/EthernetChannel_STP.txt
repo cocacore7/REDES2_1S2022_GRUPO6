@@ -9,11 +9,11 @@ enable
 conf t
 int fa 0/3
 channel-protocol lacp
-channel-group Po0 mode active
+channel-group 1 mode active
 exit
 int fa 0/5
 channel-protocol lacp
-channel-group Po0 mode active
+channel-group 1 mode active
 exit
 
 <<S1>>
