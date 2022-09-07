@@ -16,22 +16,11 @@ name Servidores
 exit
 exit
 
---------------VTP
-enable
-configure terminal
-vtp mode server
-vtp domain g6
-vtp password g6
-exit
-show vtp status
-copy running-config startup-config
-
 
 
 
 ############################# S0 ##################################
 --------------VTP
-enable
 conf t
 vtp mode client
 vtp domain g6
@@ -40,9 +29,7 @@ exit
 show vtp status
 copy running-config startup-config
 
-
 --------------PUERTOS
-enable
 conf t
 interface F0/10
 switchport mode access
@@ -89,10 +76,27 @@ exit
 
 
 ############################# S1 ##################################
+--------------VLAN
+enable
+configure terminal
+vlan 16
+name Ventas
+exit
+vlan 26
+name Distribucion
+exit
+vlan 36
+name Administracion
+exit
+vlan 46
+name Servidores
+exit
+exit
+
 --------------VTP
 enable
 configure terminal
-vtp mode client
+vtp mode server
 vtp domain g6
 vtp password g6
 exit
@@ -142,13 +146,12 @@ switchport trunk allowed vlan all
 switchport nonegotiate
 exit
 exit
-copy running-config startup-config
+
 
 
 
 ############################# S2 ##################################
 --------------VTP
-enable
 configure terminal
 vtp mode client
 vtp domain g6
@@ -200,7 +203,7 @@ switchport trunk allowed vlan all
 switchport nonegotiate
 exit
 exit
-copy running-config startup-config
+
 
 
 ############################# S3 ##################################
@@ -241,7 +244,7 @@ switchport trunk allowed vlan all
 switchport nonegotiate
 exit
 exit
-copy running-config startup-config
+
 
 
 
@@ -308,13 +311,12 @@ switchport trunk allowed vlan all
 switchport nonegotiate
 exit
 exit
-copy running-config startup-config
+
 
 
 
 ############################# S5 ##################################
 --------------VTP
-enable
 configure terminal
 vtp mode client
 vtp domain g6
@@ -351,4 +353,3 @@ switchport trunk allowed vlan all
 switchport nonegotiate
 exit
 exit
-copy running-config startup-config

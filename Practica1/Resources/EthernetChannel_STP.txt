@@ -1,0 +1,248 @@
+-----------------------CONFIGURACION ETHERNET CHANNEL ---------------------------
+
+----------------LACP--------------------
+
+// Po0: ENTRE S0 Y S1
+
+<<S0>>
+enable
+conf t
+int fa 0/3
+channel-protocol lacp
+channel-group Po0 mode active
+exit
+int fa 0/5
+channel-protocol lacp
+channel-group Po0 mode active
+exit
+
+<<S1>>
+enable
+conf t
+int fa 0/3
+channel-protocol lacp
+channel-group 1 mode active
+exit
+int fa 0/5
+channel-protocol lacp
+channel-group 1 mode active
+exit
+
+// Po1: ENTRE S1 Y S2
+
+<<S1>>
+enable
+conf t
+int fa 0/2
+channel-protocol lacp
+channel-group 2 mode active
+exit
+int fa 0/4
+channel-protocol lacp
+channel-group 2 mode active
+exit
+
+<<S2>>
+enable
+conf t
+int fa 0/2
+channel-protocol lacp
+channel-group 2 mode active
+exit
+int fa 0/4
+channel-protocol lacp
+channel-group 2 mode active
+exit
+
+// Po2: ENTRE S0 Y S4
+
+<<S0>>
+enable
+conf t
+int range fa 0/8-9
+channel-protocol lacp
+channel-group 3 mode active
+exit
+
+<<S4>>
+enable
+conf t
+int range fa 0/8-9
+channel-protocol lacp
+channel-group 3 mode active
+exit
+
+// Po3: ENTRE S2 Y S4
+
+<<S2>>
+enable
+conf t
+int range fa 0/18-19
+channel-protocol lacp
+channel-group 4 mode active
+exit
+
+<<S4>>
+enable
+conf t
+int range fa 0/18-19
+channel-protocol lacp
+channel-group 4 mode active
+exit
+
+// Po4: ENTRE S1 Y S4
+
+<<S1>>
+enable
+conf t
+int range fa 0/6-7
+channel-protocol lacp
+channel-group 5 mode active
+exit
+
+<<S4>>
+enable
+conf t
+int range fa 0/6-7
+channel-protocol lacp
+channel-group 5 mode active
+exit
+
+//Mostrar CONFIGURACION
+show etherchannel
+show etherchannel summary
+
+----------------PAGP--------------------
+
+// Po0: ENTRE S0 Y S1
+
+<<S0>>
+enable
+conf t
+int fa 0/3
+channel-protocol pagp
+channel-group 1 mode desirable
+exit
+int fa 0/5
+channel-protocol pagp
+channel-group 1 mode desirable
+exit
+
+<<S1>>
+enable
+conf t
+int fa 0/3
+channel-protocol pagp
+channel-group 1 mode desirable
+exit
+int fa 0/5
+channel-protocol pagp
+channel-group 1 mode desirable
+exit
+
+// Po1: ENTRE S1 Y S2
+
+<<S1>>
+enable
+conf t
+int fa 0/2
+channel-protocol pagp
+channel-group 2 mode desirable
+exit
+int fa 0/4
+channel-protocol pagp
+channel-group 2 mode desirable
+exit
+
+<<S2>>
+enable
+conf t
+int fa 0/2
+channel-protocol pagp
+channel-group 2 mode desirable
+exit
+int fa 0/4
+channel-protocol pagp
+channel-group 2 mode desirable
+exit
+
+// Po2: ENTRE S0 Y S4
+
+<<S0>>
+enable
+conf t
+int range fa 0/8-9
+channel-protocol pagp
+channel-group 3 mode desirable
+exit
+
+<<S4>>
+enable
+conf t
+int range fa 0/8-9
+channel-protocol pagp
+channel-group 3 mode desirable
+exit
+
+// Po3: ENTRE S2 Y S4
+
+<<S2>>
+enable
+conf t
+int range fa 0/18-19
+channel-protocol pagp
+channel-group 4 mode desirable
+exit
+
+<<S4>>
+enable
+conf t
+int range fa 0/18-19
+channel-protocol pagp
+channel-group 4 mode desirable
+exit
+
+// Po4: ENTRE S1 Y S4
+
+<<S1>>
+enable
+conf t
+int range fa 0/6-7
+channel-protocol pagp
+channel-group 5 mode desirable
+exit
+
+<<S4>>
+enable
+conf t
+int range fa 0/6-7
+channel-protocol pagp
+channel-group 5 mode desirable
+exit
+
+//Mostrar CONFIGURACION
+show etherchannel
+show etherchannel summary
+
+
+-----------------------CONFIGURACION STP ---------------------------
+
+-------------------PVST-----------------------
+
+enable
+conf t
+spanning-tree mode pvst
+exit
+
+show spanning-tree
+exit
+
+----------------Rapid PVST--------------------
+
+enable
+conf t
+spanning-tree mode rapid-pvst
+exit
+
+show spanning-tree
+exit
