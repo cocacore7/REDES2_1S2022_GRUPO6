@@ -564,25 +564,32 @@ switchport nonegotiate
 ```
 Se agregaron las interfaces sin usar al BlackHole la cual es la vlan 999.
 Switch 0.
-![](Resources/img/S0_BackHole.png)
+
+![](Resources/img/S0_BackHole.PNG)
 
 Switch 1.
-![](Resources/img/S1_BackHole.png)
+
+![](Resources/img/S1_BackHole.PNG)
 
 Switch 2.
-![](Resources/img/S2_BackHole.png)
+
+![](Resources/img/S2_BackHole.PNG)
 
 Switch 3.
-![](Resources/img/S3_BackHole.png)
+
+![](Resources/img/S3_BackHole.PNG)
 
 Switch 4.
-![](Resources/img/S4_BackHole.png)
+
+![](Resources/img/S4_BackHole.PNG)
 
 Switch 5.
-![](Resources/img/S5_BackHole.png)
+
+![](Resources/img/S5_BackHole.PNG)
 
 Switch R1.
-![](Resources/img/R1_BackHole.png)
+
+![](Resources/img/R1_BackHole.PNG)
 
 
 ## Seguridad Ventas
@@ -596,7 +603,8 @@ switchport port-security maximum 5
 exit
 ```
 al igual se adjunto evidencia del comando.
-![](Resources/img/S0-SVentas.png)
+
+![](Resources/img/S0-SVentas.PNG)
 
 ## Seguridad Distribucion
 Se configuró con los siguientes comandos.
@@ -610,7 +618,8 @@ switchport port-security violation shutdown
 exit
 ```
 al igual se adjunto evidencia del comando.
-![](Resources/img/S4_Distribucion.png)
+
+![](Resources/img/S4_Distribucion.PNG)
 
 ## Seguridad Adminstracion
 Se configuró con los siguientes comandos.
@@ -624,7 +633,8 @@ switchport port-security violation shutdown
 exit
 ```
 al igual se adjunto evidencia del comando.
-![](Resources/img/S2-Adm.png)
+
+![](Resources/img/S2-Adm.PNG)
 
 ---
 ## Sevidor
