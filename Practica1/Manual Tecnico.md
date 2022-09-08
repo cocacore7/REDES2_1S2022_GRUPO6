@@ -4,9 +4,9 @@
 | Carnet | Nombre |
 | ------ | ------ |
 | 201503702 | Edgar Humberto Borrayo Bartolón |
-| 201800000 | Katy | 
-| 201800001 | Oscar Rene Rodriguez |
-| 201800002 | Ariel Rubelce Macario |
+| 201908321 | Katerine Adalinda Santos Ramirez | 
+| 201908335 | Oscar Rene Rodriguez Vasquez |
+| 201905837 | Ariel Rubelce Macario Coronado |
 
 ---
 ## _Sub Redes Necesarias_
@@ -498,3 +498,79 @@ show spanning-tree
 Se utilizo una convinacion de configuracion de protocolo etherchannel LACP con sus puertos en modo active/active, con una configuracion de STP de Rapid PVST. Ya que para los tiempos documentados fue el que obtuvo menor convergencia para reestablecer la conexion.
 
 ---
+
+## Seguridad.
+Se configuró el port-security a todas las interfaces, exceptuando las interfaces troncales, se configuruo con el siguiente comando.
+
+```sh
+interface range f0/2 - 24
+switchport mode access
+switchport port-security
+```
+Para desactivar el protocolo DTP se usó el siguiente comando.
+```sh
+switchport nonegotiate 
+```
+Se agregaron las interfaces sin usar al BlackHole la cual es la vlan 999.
+Switch 0.
+![](Resources/img/S0_BackHole.png)
+
+Switch 1.
+![](Resources/img/S1_BackHole.png)
+
+Switch 2.
+![](Resources/img/S2_BackHole.png)
+
+Switch 3.
+![](Resources/img/S3_BackHole.png)
+
+Switch 4.
+![](Resources/img/S4_BackHole.png)
+
+Switch 5.
+![](Resources/img/S5_BackHole.png)
+
+Switch R1.
+![](Resources/img/R1_BackHole.png)
+
+
+## Seguridad Ventas
+Se configuró con los siguientes comandos.
+```sh
+enable
+config terminal
+interface f0/10
+switchport port-security mac-address sticky
+switchport port-security maximum 5
+exit
+```
+al igual se adjunto evidencia del comando.
+![](Resources/img/S0-SVentas.png)
+
+## Seguridad Distribucion
+Se configuró con los siguientes comandos.
+```sh
+enable
+config terminal
+interface f0/10
+switchport port-security mac-address sticky
+switchport port-security maximum 1
+switchport port-security violation shutdown
+exit
+```
+al igual se adjunto evidencia del comando.
+![](Resources/img/S4_Distribucion.png)
+
+## Seguridad Adminstracion
+Se configuró con los siguientes comandos.
+```sh
+enable
+config terminal
+interface f0/10
+switchport port-security mac-address 000D.BD3E.26DC
+switchport port-security maximum 1
+switchport port-security violation shutdown
+exit
+```
+al igual se adjunto evidencia del comando.
+![](Resources/img/S2-Adm.png)
