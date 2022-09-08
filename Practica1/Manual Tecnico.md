@@ -498,6 +498,57 @@ show spanning-tree
 Se utilizo una convinacion de configuracion de protocolo etherchannel LACP con sus puertos en modo active/active, con una configuracion de STP de Rapid PVST. Ya que para los tiempos documentados fue el que obtuvo menor convergencia para reestablecer la conexion.
 
 ---
+## InterVlan
+Se configuró el Switch 3560-24PS el cual es capa 3, para que este reenviara el tráfico de red de una VLAN a otra
+VLAN. De los 3 tipos de enrutamiento intervlan que hay se utilizó el llamado "Switch de capa 3 con interfaces virtuales (SVIs)" esto debido a que es la solución más escalable para esta práctica.
+
+Comandos para configurar intervlan en un switch capa 3:
+```sh
+int vlan 16
+description Interfaz de enlace para vlan 16
+ip address 192.168.86.1 255.255.255.224
+no shutdown
+exit
+int vlan 26
+description Interfaz de enlace para vlan 26
+ip address 192.168.86.33 255.255.255.224
+no shutdown
+exit
+int vlan 36
+description Interfaz de enlace para vlan 36
+ip address 192.168.86.65 255.255.255.224
+no shutdown
+exit
+int vlan 46
+description Interfaz de enlace para vlan 46
+ip address 192.168.86.97 255.255.255.224
+no shutdown
+exit
+```
+![](Resources/img/InterVlans-Ip-Route.png)
+Comandos para crear las vlans en el switch capa 3:
+```sh
+vlan 16
+name Ventas
+exit
+vlan 26
+name Distribucion
+exit
+vlan 36
+name Administracion
+exit
+vlan 46
+name Servidores
+exit
+```
+Vlans creadas en el swtich capa 3
+![](Resources/img/InterVlans-Vlans.png)
+
+Comandos para activar la opcion de routeo en el switch capa 3:
+```sh
+ip routing
+```
+---
 
 ## Seguridad.
 Se configuró el port-security a todas las interfaces, exceptuando las interfaces troncales, se configuruo con el siguiente comando.
@@ -574,3 +625,22 @@ exit
 ```
 al igual se adjunto evidencia del comando.
 ![](Resources/img/S2-Adm.png)
+
+---
+## Sevidor
+Se empleo el Servidor 0 para almacenar y transmitir el contenido solicitado de un sitio web al navegador de cualquier usuario que lo requiera.
+
+Se empleo el siguiente codigo html para agregar los datos de los integrantes en el index.html:
+```sh
+<html>
+<center><font size='+2' color='blue'>Cisco Packet Tracer</font></center>
+<h4>Ariel Rubelce Macario Coronado - 201905837</h4>
+<h4>Oscar Rene Rodriguez Vazques - 201908335</h4>
+<h4>Edgar Humberto Borrayo Bartolón - 201503702</h4>
+<h4>Katerine Adalinda Santos Ramires - 201908321</h4>
+<h4>Servidor 0</h4>
+</html>
+```
+La apariencia de la página web es la siguiente:
+![](Resources/img/Pagina-Servidor.png)
+
