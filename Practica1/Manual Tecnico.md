@@ -210,3 +210,291 @@ Switch(config-if)#no shutdown
 Switch(config-if)#exit
 
 Switch(config)#ip routing  
+
+---
+## Configuracion PVST y Rapid PVST
+
+### Comandos PVST
+```sh
+enable
+conf t
+spanning-tree mode pvst
+exit
+
+show spanning-tree
+exit
+```
+### Evidencia PVST
+![](Resources/img/PVST_VLAN1.png)
+![](Resources/img/PVST_VLAN16.png)
+![](Resources/img/PVST_VLAN26.png)
+![](Resources/img/PVST_VLAN36.png)
+![](Resources/img/PVST_VLAN46.png)
+
+### Comandos Rapid PVST
+```sh
+enable
+conf t
+spanning-tree mode rapid-pvst
+exit
+show spanning-tree
+exit
+```
+### Evidencia Rapid PVST
+![](Resources/img/RapidPVST_VLAN1.png)
+![](Resources/img/RapidPVST_VLAN16.png)
+![](Resources/img/RapidPVST_VLAN26.png)
+![](Resources/img/RapidPVST_VLAN36.png)
+![](Resources/img/RapidPVST_VLAN46.png)
+
+---
+## Configuracion Etherchannel
+
+### Comandos S0 LACP y PAGP
+Comandos LACP
+```sh
+enable
+conf t
+int fa 0/3
+channel-protocol lacp
+channel-group 1 mode active
+exit
+int fa 0/5
+channel-protocol lacp
+channel-group 1 mode active
+exit
+
+
+enable
+conf t
+int range fa 0/8-9
+channel-protocol lacp
+channel-group 3 mode active
+exit
+```
+Comandos PAGP
+```sh
+enable
+conf t
+int fa 0/3
+channel-protocol pagp
+channel-group 1 mode desirable
+exit
+int fa 0/5
+channel-protocol pagp
+channel-group 1 mode desirable
+exit
+
+
+enable
+conf t
+int range fa 0/8-9
+channel-protocol pagp
+channel-group 3 mode desirable
+exit
+```
+
+
+### Evidencia S0 LACP y PAGP
+![](Resources/img/S0_LACP.png)
+![](Resources/img/S0_PAGP.png)
+
+### Comandos S1 LACP y PAGP
+Comandos LACP
+```sh
+enable
+conf t
+int fa 0/3
+channel-protocol lacp
+channel-group 1 mode active
+exit
+int fa 0/5
+channel-protocol lacp
+channel-group 1 mode active
+exit
+
+
+enable
+conf t
+int fa 0/2
+channel-protocol lacp
+channel-group 2 mode active
+exit
+int fa 0/4
+channel-protocol lacp
+channel-group 2 mode active
+exit
+
+
+enable
+conf t
+int range fa 0/6-7
+channel-protocol lacp
+channel-group 5 mode active
+exit
+```
+Comandos PAGP
+```sh
+enable
+conf t
+int fa 0/3
+channel-protocol pagp
+channel-group 1 mode desirable
+exit
+int fa 0/5
+channel-protocol pagp
+channel-group 1 mode desirable
+exit
+
+
+enable
+conf t
+int fa 0/2
+channel-protocol pagp
+channel-group 2 mode desirable
+exit
+int fa 0/4
+channel-protocol pagp
+channel-group 2 mode desirable
+exit
+
+
+enable
+conf t
+int range fa 0/6-7
+channel-protocol pagp
+channel-group 5 mode desirable
+exit
+```
+
+
+### Evidencia S1 LACP y PAGP
+![](Resources/img/S1_LACP.png)
+![](Resources/img/S1_PAGP.png)
+
+### Comandos S2 LACP y PAGP
+Comandos LACP
+```sh
+enable
+conf t
+int fa 0/2
+channel-protocol lacp
+channel-group 2 mode active
+exit
+int fa 0/4
+channel-protocol lacp
+channel-group 2 mode active
+exit
+
+
+enable
+conf t
+int range fa 0/18-19
+channel-protocol lacp
+channel-group 4 mode active
+exit
+```
+Comandos PAGP
+```sh
+enable
+conf t
+int fa 0/2
+channel-protocol pagp
+channel-group 2 mode desirable
+exit
+int fa 0/4
+channel-protocol pagp
+channel-group 2 mode desirable
+exit
+
+
+enable
+conf t
+int range fa 0/18-19
+channel-protocol pagp
+channel-group 4 mode desirable
+exit
+```
+
+
+### Evidencia S2 LACP y PAGP
+![](Resources/img/S2_LACP.png)
+![](Resources/img/S2_PAGP.png)
+
+### Comandos S4 LACP y PAGP
+Comandos LACP
+```sh
+enable
+conf t
+int range fa 0/8-9
+channel-protocol lacp
+channel-group 3 mode active
+exit
+
+
+enable
+conf t
+int range fa 0/18-19
+channel-protocol lacp
+channel-group 4 mode active
+exit
+
+
+enable
+conf t
+int range fa 0/6-7
+channel-protocol lacp
+channel-group 5 mode active
+exit
+```
+Comandos PAGP
+```sh
+enable
+conf t
+int range fa 0/8-9
+channel-protocol pagp
+channel-group 3 mode desirable
+exit
+
+
+enable
+conf t
+int range fa 0/18-19
+channel-protocol pagp
+channel-group 4 mode desirable
+exit
+
+
+enable
+conf t
+int range fa 0/6-7
+channel-protocol pagp
+channel-group 5 mode desirable
+exit
+```
+
+
+### Evidencia S4 LACP y PAGP
+![](Resources/img/S4_LACP.png)
+![](Resources/img/S4_PAGP.png)
+
+### Mostrar Configuraciones
+```sh
+enable
+show etherchannel
+show etherchannel summary
+show spanning-tree
+```
+
+### Tabla de Convergencias
+
+|           | PVST           | Rapid PVST     |
+|-----------|----------------|----------------|
+| **LACP**  | 46.42 segundos | 16.15 segundos |
+| **PAGP**  | 47.20 segundos | 16.50 segundos |
+
+
+### Conclusion convergencia
+Se utilizo una convinacion de configuracion de protocolo etherchannel LACP con sus puertos en modo active/active, con una configuracion de STP de Rapid PVST. Ya que para los tiempos documentados fue el que obtuvo menor convergencia para reestablecer la conexion.
+
+---
