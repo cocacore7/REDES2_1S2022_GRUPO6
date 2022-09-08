@@ -642,5 +642,6 @@ Se empleo el siguiente codigo html para agregar los datos de los integrantes en 
 </html>
 ```
 La apariencia de la página web es la siguiente:
+
 ![](Resources/img/Pagina-Servidor.png)
 
