@@ -225,11 +225,11 @@ show spanning-tree
 exit
 ```
 ### Evidencia PVST
-![](Resources/img/PVST_VLAN1.png)
-![](Resources/img/PVST_VLAN16.png)
-![](Resources/img/PVST_VLAN26.png)
-![](Resources/img/PVST_VLAN36.png)
-![](Resources/img/PVST_VLAN46.png)
+![](Resources/img/PVST_VLAN1.PNG)
+![](Resources/img/PVST_VLAN16.PNG)
+![](Resources/img/PVST_VLAN26.PNG)
+![](Resources/img/PVST_VLAN36.PNG)
+![](Resources/img/PVST_VLAN46.PNG)
 
 ### Comandos Rapid PVST
 ```sh
@@ -241,11 +241,11 @@ show spanning-tree
 exit
 ```
 ### Evidencia Rapid PVST
-![](Resources/img/RapidPVST_VLAN1.png)
-![](Resources/img/RapidPVST_VLAN16.png)
-![](Resources/img/RapidPVST_VLAN26.png)
-![](Resources/img/RapidPVST_VLAN36.png)
-![](Resources/img/RapidPVST_VLAN46.png)
+![](Resources/img/RapidPVST_VLAN1.PNG)
+![](Resources/img/RapidPVST_VLAN16.PNG)
+![](Resources/img/RapidPVST_VLAN26.PNG)
+![](Resources/img/RapidPVST_VLAN36.PNG)
+![](Resources/img/RapidPVST_VLAN46.PNG)
 
 ---
 ## Configuracion Etherchannel
@@ -296,8 +296,8 @@ exit
 
 
 ### Evidencia S0 LACP y PAGP
-![](Resources/img/S0_LACP.png)
-![](Resources/img/S0_PAGP.png)
+![](Resources/img/S0_LACP.PNG)
+![](Resources/img/S0_PAGP.PNG)
 
 ### Comandos S1 LACP y PAGP
 Comandos LACP
@@ -369,8 +369,8 @@ exit
 
 
 ### Evidencia S1 LACP y PAGP
-![](Resources/img/S1_LACP.png)
-![](Resources/img/S1_PAGP.png)
+![](Resources/img/S1_LACP.PNG)
+![](Resources/img/S1_PAGP.PNG)
 
 ### Comandos S2 LACP y PAGP
 Comandos LACP
@@ -418,8 +418,8 @@ exit
 
 
 ### Evidencia S2 LACP y PAGP
-![](Resources/img/S2_LACP.png)
-![](Resources/img/S2_PAGP.png)
+![](Resources/img/S2_LACP.PNG)
+![](Resources/img/S2_PAGP.PNG)
 
 ### Comandos S4 LACP y PAGP
 Comandos LACP
@@ -475,8 +475,8 @@ exit
 
 
 ### Evidencia S4 LACP y PAGP
-![](Resources/img/S4_LACP.png)
-![](Resources/img/S4_PAGP.png)
+![](Resources/img/S4_LACP.PNG)
+![](Resources/img/S4_PAGP.PNG)
 
 ### Mostrar Configuraciones
 ```sh
@@ -525,7 +525,7 @@ ip address 192.168.86.97 255.255.255.224
 no shutdown
 exit
 ```
-![](Resources/img/InterVlans-Ip-Route.png)
+![](Resources/img/InterVlans-Ip-Route.PNG)
 Comandos para crear las vlans en el switch capa 3:
 ```sh
 vlan 16
@@ -542,7 +542,7 @@ name Servidores
 exit
 ```
 Vlans creadas en el swtich capa 3
-![](Resources/img/InterVlans-Vlans.png)
+![](Resources/img/InterVlans-Vlans.PNG)
 
 Comandos para activar la opcion de routeo en el switch capa 3:
 ```sh
@@ -653,5 +653,5 @@ Se empleo el siguiente codigo html para agregar los datos de los integrantes en 
 ```
 La apariencia de la página web es la siguiente:
 
-![](Resources/img/Pagina-Servidor.png)
+![](Resources/img/Pagina-Servidor.PNG)
 
