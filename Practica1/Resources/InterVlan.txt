@@ -1,0 +1,40 @@
+************************************************************************Practica1************************************************************************
+*******************************************Intervlna switch capa 3*******************************************
+***Switch capa 3*** 
+enable
+configure terminal
+int vlan 16
+description Interfaz de enlace para vlan 16
+ip address 192.168.86.1 255.255.255.224
+no shutdown
+exit
+int vlan 26
+description Interfaz de enlace para vlan 26
+ip address 192.168.86.33 255.255.255.224
+no shutdown
+exit
+int vlan 36
+description Interfaz de enlace para vlan 36
+ip address 192.168.86.65 255.255.255.224
+no shutdown
+exit
+int vlan 46
+description Interfaz de enlace para vlan 46
+ip address 192.168.86.97 255.255.255.224
+no shutdown
+exit
+vlan 16
+name Ventas
+exit
+vlan 26
+name Distribucion
+exit
+vlan 36
+name Administracion
+exit
+vlan 46
+name Servidores
+exit
+ip routing
+exit
+COPY Running-config Startup-config
