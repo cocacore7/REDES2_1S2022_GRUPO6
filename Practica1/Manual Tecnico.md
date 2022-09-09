@@ -525,7 +525,8 @@ ip address 192.168.86.97 255.255.255.224
 no shutdown
 exit
 ```
-![](Resources/img/InterVlans-Ip-Route.PNG)
+![](Resources/img/InterVlans-Ip-Route.png)
+
 Comandos para crear las vlans en el switch capa 3:
 ```sh
 vlan 16
@@ -542,7 +543,8 @@ name Servidores
 exit
 ```
 Vlans creadas en el swtich capa 3
-![](Resources/img/InterVlans-Vlans.PNG)
+
+![](Resources/img/InterVlans-Vlans.png)
 
 Comandos para activar la opcion de routeo en el switch capa 3:
 ```sh
@@ -653,5 +655,5 @@ Se empleo el siguiente codigo html para agregar los datos de los integrantes en 
 ```
 La apariencia de la página web es la siguiente:
 
-![](Resources/img/Pagina-Servidor.PNG)
+![](Resources/img/Pagina-Servidor.png)
 
