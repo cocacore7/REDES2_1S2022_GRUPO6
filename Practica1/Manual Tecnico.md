@@ -564,6 +564,39 @@ Para desactivar el protocolo DTP se usó el siguiente comando.
 ```sh
 switchport nonegotiate 
 ```
+
+Para los puertos troncales se le asgina una vlan nativa la cual es la 99.
+```sh
+switchport trunk native vlan 99
+```
+Switch 0.
+
+![](Resources/img/NativaS0.PNG)
+
+Switch 1.
+
+![](Resources/img/NativaS1.PNG)
+
+Switch 2.
+
+![](Resources/img/NativaS2.PNG)
+
+Switch 3.
+
+![](Resources/img/NativaS3.PNG)
+
+Switch 4.
+
+![](Resources/img/NativaS4.PNG)
+
+Switch 5.
+
+![](Resources/img/NativaS5.PNG)
+
+Switch R1.
+
+![](Resources/img/NativaR1.PNG)
+
 Se agregaron las interfaces sin usar al BlackHole la cual es la vlan 999.
 Switch 0.
 

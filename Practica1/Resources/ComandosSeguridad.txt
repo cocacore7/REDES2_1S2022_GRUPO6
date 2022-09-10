@@ -265,6 +265,94 @@ interface range f0/10 - 11
 switchport port-security
 exit
 
+--
+S0
+enable
+config terminal
+interface f0/1
+switchport nonegotiate 
+switchport trunk native vlan 99
+exit
+
+interface f0/7
+switchport nonegotiate 
+switchport trunk native vlan 99
+exit
+
+S1
+interface range f0/2-7
+switchport nonegotiate 
+switchport trunk native vlan 99
+exit
+
+interface f0/13
+switchport nonegotiate 
+switchport trunk native vlan 99
+exit
+
+interface f0/15
+switchport nonegotiate 
+switchport trunk native vlan 99
+exit
+
+S2
+interface range f0/2-4
+switchport nonegotiate 
+switchport trunk native vlan 99
+exit
+
+interface f0/7
+switchport nonegotiate 
+switchport trunk native vlan 99
+exit
+
+interface range f0/18-19
+switchport nonegotiate 
+switchport trunk native vlan 99
+exit
+
+S3
+interface f0/15
+switchport nonegotiate 
+switchport trunk native vlan 99
+exit
+
+interface range f0/13-14
+switchport nonegotiate 
+switchport trunk native vlan 99
+exit
+
+S4
+interface f0/4
+switchport nonegotiate 
+switchport trunk native vlan 99
+exit
+
+interface range f0/6-9
+switchport nonegotiate 
+switchport trunk native vlan 99
+exit
+
+interface f0/14
+switchport nonegotiate 
+switchport trunk native vlan 99
+exit
+
+interface range f0/18-19
+switchport nonegotiate 
+switchport trunk native vlan 99
+exit
+
+S5
+interface f0/7
+switchport nonegotiate 
+switchport trunk native vlan 99
+exit
+
+interface range f0/14-15
+switchport nonegotiate 
+switchport trunk native vlan 99
+exit
 
 Seguridad para interfaces asignadas a la VLAN de ventas
 S0
