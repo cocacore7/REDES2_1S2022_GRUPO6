@@ -1,0 +1,294 @@
+--------------VLAN
+enable
+configure terminal
+vlan 10
+name Educacion
+exit
+vlan 20
+name CulturaYDeporte
+exit
+vlan 30
+name Salud
+exit
+vlan 40
+name FuncionPublica
+exit
+vlan 50
+name DesarrolloEmpresarial
+exit
+vlan 60
+name DesarrolloEconomico
+exit
+exit
+############################# SC ##################################
+enable
+configure terminal
+vtp mode server
+vtp domain g6
+vtp password g6
+exit
+show vtp status
+copy running-config startup-config
+
+int range f0/1 - 4
+sw mode trunk
+sw trunk allowed vlan 10,30,40,1002-1005
+exit
+
+############################# SV ##################################
+ena
+conf t
+vtp mode client
+vtp domain g6
+vtp password g6
+exit
+show vtp status
+copy running-config startup-config
+
+int f0/1
+sw mode trunk
+sw trunk allowed vlan 10,30,40,1002-1005
+
+int f0/2
+sw mode access
+switchport access vlan 30
+exit
+
+int f0/3
+sw mode access
+switchport access vlan 30
+exit
+############################# SA ##################################
+ena
+conf t
+vtp mode client
+vtp domain g6
+vtp password g6
+exit
+show vtp status
+copy running-config startup-config
+
+int f0/1
+sw mode trunk
+sw trunk allowed vlan 10,30,40,1002-1005
+exit
+
+int f0/2
+switchport access vlan 10
+exit
+
+int f0/3
+switchport access vlan 10
+exit
+
+
+############################### R1 #####################
+
+enable
+configure terminal
+int gig0/0
+no shutdown
+ip address 5.5.5.1 255.255.255.252
+exit
+
+
+enable
+configure terminal
+int gig0/1
+no shutdown
+ip address 2.2.2.2 255.255.255.252
+exit
+
+enable
+configure terminal
+int gig0/2
+no shutdown
+ip address 4.4.4.2 255.255.255.252
+exit
+
+enable
+configure terminal
+int gig0/2/0
+no shutdown
+ip address 8.8.8.1 255.255.255.252
+exit
+
+.......................................RIP..........................................
+enable
+configure terminal
+router rip 
+version 2
+no auto-summary
+network 2.2.2.0
+network 5.5.5.0
+network 4.4.4.0
+network 8.8.8.0
+exit
+
+############################### R2 #####################
+
+
+enable
+configure terminal
+int gig0/2
+no shutdown
+ip address 4.4.4.1 255.255.255.252
+exit
+
+int gig0/1
+no shutdown
+ip address 3.3.3.1 255.255.255.252
+exit
+
+int gig0/0
+no shutdown
+ip address 6.6.6.1 255.255.255.252
+exit
+
+enable
+configure terminal
+int gig0/2/0
+no shutdown
+ip address 7.7.7.2 255.255.255.252
+exit
+
+.......................................EIGRP..........................................
+enable
+configure terminal
+router eigrp 100
+network 4.4.4.0 0.0.0.3
+network 6.6.6.0 0.0.0.3
+network 3.3.3.0 0.0.0.3
+network 7.7.7.0 0.0.0.3
+exit
+exit
+wr
+
+############################### R3 #####################
+enable
+configure terminal
+int gig0/0
+no shutdown
+ip address 192.168.86.1 255.255.255.128
+exit
+
+int gig0/2
+no shutdown
+ip address 1.1.1.1 255.255.255.252
+exit
+
+int gig0/1
+no shutdown
+ip address 2.2.2.1 255.255.255.252
+exit
+
+
+int g0/0.10
+encapsulation dot1Q 10
+ip address 192.168.86.129 255.255.255.128
+no shutdown
+exit
+
+int g0/0.30
+encapsulation dot1Q 30
+ip address 192.168.86.1 255.255.255.128
+no shutdown
+exit
+
+int g0/0.40
+encapsulation dot1Q 40
+ip address 192.168.26.1 255.255.255.128
+no shutdown
+exit
+
+enable
+configure terminal
+int gig0/2/0
+no shutdown
+ip address 7.7.7.1 255.255.255.252
+exit
+.......................................RIP..........................................
+enable
+configure terminal
+router rip 
+version 2
+no auto-summary
+network 2.2.2.0
+network 1.1.1.0
+network 7.7.7.0
+network 192.168.86.0
+exit
+
+############################### R4 #####################
+
+enable
+configure terminal
+int gig0/0
+no shutdown
+exit
+
+int gig0/2
+no shutdown
+ip address 1.1.1.2 255.255.255.252
+exit
+
+int gig0/1
+no shutdown
+ip address 3.3.3.2 255.255.255.252
+exit
+
+enable
+configure terminal
+int gig0/2/0
+no shutdown
+ip address 8.8.8.2 255.255.255.252
+exit
+.......................................EIGRP..........................................
+ena
+config t
+router eigrp 100
+network 192.168.86.0 0.0.0.255 
+network 1.1.1.0 0.0.0.3
+network 3.3.3.0 0.0.0.3
+network 8.8.8.0 0.0.0.3
+exit
+exit
+wr
+
+
+config t
+int g0/0.10
+encapsulation dot1Q 10
+ip address 192.168.86.129 255.255.255.128
+no shutdown
+exit
+
+int g0/0.30
+encapsulation dot1Q 30
+ip address 192.168.86.1 255.255.255.128
+no shutdown
+exit
+
+int g0/0.40
+encapsulation dot1Q 40
+ip address 192.168.26.1 255.255.255.128
+no shutdown
+exit
+
+
+=========================================== Multi
+
+enable
+configure terminal
+int f0/1
+ip address 5.5.5.2 255.255.255.252
+no shutdown
+exit
+
+int f0/2
+ip address 6.6.6.2 255.255.255.252
+no shutdown
+exit
+
+ip route 0.0.0.0 0.0.0.0 5.5.5.1
+ip route 0.0.0.0 0.0.0.0 6.6.6.1
