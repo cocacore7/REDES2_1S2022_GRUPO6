@@ -168,7 +168,66 @@ exit
 exit
 COPY Running-config Startup-config
 ***********************************************************************************************************************
-***************************************************SWITCH2*************************************************************
+***************************************************SWITCH3*************************************************************
+***********************************************************************************************************************
+........................................................Configuracion de puertos.........................................................
+...................................Trunk...................................
+enable
+configure terminal
+int fastethernet 0/1
+switchport mode trunk 
+switchport trunk allowed vlan all
+exit
+int fastethernet 0/5
+switchport mode trunk 
+switchport trunk allowed vlan all
+exit
+int range fastethernet 0/2 - 4
+switchport mode access 
+switchport access vlan 20
+exit	
+exit
+wr
+........................................................VTP.........................................................
+enable
+configure terminal
+vtp mode client
+vtp domain g6
+vtp password g6
+exit
+wr
+show vtp status
+***********************************************************************************************************************
+***************************************************SWITCH4*************************************************************
+***********************************************************************************************************************
+........................................................Configuracion de puertos.........................................................
+enable
+configure terminal
+int fastethernet 0/1
+switchport mode trunk 
+switchport trunk allowed vlan all
+exit
+int fastethernet 0/4
+switchport mode trunk 
+switchport trunk allowed vlan all
+exit
+int range fastethernet 0/2 - 3
+switchport mode access 
+switchport access vlan 40
+exit
+exit
+wr
+........................................................VTP.........................................................
+enable
+configure terminal
+vtp mode client
+vtp domain g6
+vtp password g6
+exit
+wr
+show vtp status
+***********************************************************************************************************************
+***************************************************SWITCH5*************************************************************
 ***********************************************************************************************************************
 ........................................................VLANS.........................................................
 enable
@@ -207,65 +266,6 @@ wr
 enable
 configure terminal
 vtp mode server
-vtp domain g6
-vtp password g6
-exit
-wr
-show vtp status
-***********************************************************************************************************************
-***************************************************SWITCH0*************************************************************
-***********************************************************************************************************************
-........................................................Configuracion de puertos.........................................................
-...................................Trunk...................................
-enable
-configure terminal
-int fastethernet 0/1
-switchport mode trunk 
-switchport trunk allowed vlan all
-exit
-int fastethernet 0/5
-switchport mode trunk 
-switchport trunk allowed vlan all
-exit
-int range fastethernet 0/2 - 4
-switchport mode access 
-switchport access vlan 20
-exit	
-exit
-wr
-........................................................VTP.........................................................
-enable
-configure terminal
-vtp mode client
-vtp domain g6
-vtp password g6
-exit
-wr
-show vtp status
-***********************************************************************************************************************
-***************************************************SWITCH1*************************************************************
-***********************************************************************************************************************
-........................................................Configuracion de puertos.........................................................
-enable
-configure terminal
-int fastethernet 0/1
-switchport mode trunk 
-switchport trunk allowed vlan all
-exit
-int fastethernet 0/4
-switchport mode trunk 
-switchport trunk allowed vlan all
-exit
-int range fastethernet 0/2 - 3
-switchport mode access 
-switchport access vlan 40
-exit
-exit
-wr
-........................................................VTP.........................................................
-enable
-configure terminal
-vtp mode client
 vtp domain g6
 vtp password g6
 exit
