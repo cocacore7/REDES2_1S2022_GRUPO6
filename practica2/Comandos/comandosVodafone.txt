@@ -6,7 +6,7 @@ enable
 configure terminal
 int gig0/0
 no shutdown
-ip address 21.21.21.21 255.255.255.252
+ip address 21.21.21.1 255.255.255.252
 exit
 int gig0/1
 no shutdown
