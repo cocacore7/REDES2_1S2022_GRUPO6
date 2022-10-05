@@ -21,7 +21,7 @@ wr
 .......................................OSPF..........................................
 enable
 configure terminal
-router ospf 100
+router ospf 500
 network 23.23.23.0 0.0.0.3 area 0
 network 21.21.21.0 0.0.0.3 area 0
 exit
@@ -38,11 +38,11 @@ wr
 enable
 configure terminal
 router rip
-redistribute ospf 100 metric 15
+redistribute ospf 500 metric 15
 exit
 do show ip route
 .......................................Redistribucion rip-ospf..........................................
-router ospf 100
+router ospf 500
 redistribute rip subnets 
 exit
 exit
@@ -74,7 +74,7 @@ wr
 .......................................OSPF..........................................
 enable
 configure terminal
-router ospf 200
+router ospf 600
 network 23.23.23.0 0.0.0.3 area 0
 exit
 exit
@@ -85,9 +85,9 @@ configure terminal
 router bgp 200
 network 24.24.24.0 mask 255.255.255.252
 neighbor 24.24.24.2 remote-as 100
-redistribute ospf 200
+redistribute ospf 600
 exit
-router ospf 200
+router ospf 600
 redistribute bgp 200 metric 1 subnets 
 exit
 exit
@@ -116,7 +116,7 @@ wr
 .......................................OSPF..........................................
 enable
 configure terminal
-router ospf 300
+router ospf 700
 network 21.21.21.0 0.0.0.3 area 0
 network 192.168.26.0 0.0.0.127 area 0
 exit
