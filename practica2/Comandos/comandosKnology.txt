@@ -1,0 +1,245 @@
+--------------------------------------------Router0-----------------------------------------
+--------------------------------------------Puertos
+ena
+conf t
+int gig0/0
+no shutdown
+ip address 12.12.12.2 255.255.255.252
+exit
+int gig0/1
+no shutdown
+ip address 13.13.13.2 255.255.255.252
+exit
+int gig0/2
+no shutdown
+ip address 11.11.11.1 255.255.255.252
+exit
+--------------------------------------------Protocolos
+ena
+conf t
+router ospf 300
+network 11.11.11.0 0.0.0.3 area 0
+network 12.12.12.0 0.0.0.3 area 0
+exit
+router eigrp 100
+network 13.13.13.0 0.0.0.3
+exit
+--------------------------------------------Redistribucion De Rutas
+ena
+conf t
+router eigrp 100
+redistribute ospf 300 metric 1 1 1 1 1
+exit
+router ospf 300
+redistribute eigrp 100
+exit
+do show ip route
+
+--------------------------------------------Router1-----------------------------------------
+--------------------------------------------Puertos
+ena
+conf t
+int gig0/0
+no shutdown
+ip address 12.12.12.1 255.255.255.252
+exit
+int gig0/1
+no shutdown
+ip address 14.14.14.2 255.255.255.252
+exit
+--------------------------------------------Protocolos
+ena
+conf t
+router ospf 200
+network 12.12.12.0 0.0.0.3 area 0
+network 14.14.14.0 0.0.0.3 area 0
+exit
+
+--------------------------------------------Router2-----------------------------------------
+--------------------------------------------Puertos
+ena
+conf t
+int gig0/0
+no shutdown
+ip address 13.13.13.1 255.255.255.252
+exit
+int gig0/1
+no shutdown
+ip address 15.15.15.2 255.255.255.252
+exit
+--------------------------------------------Protocolos
+ena
+conf t
+router eigrp 100
+network 13.13.13.0 0.0.0.3
+network 15.15.15.0 0.0.0.3
+exit
+
+
+--------------------------------------------Router3-----------------------------------------
+--------------------------------------------Puertos
+ena
+conf t
+int gig0/1
+no shutdown
+ip address 14.14.14.1 255.255.255.252
+exit
+--------------------------------------------Protocolos
+ena
+conf t
+router ospf 100
+network 14.14.14.0 0.0.0.3 area 0
+network 192.168.56.5 0.0.0.127 area 0
+exit
+--------------------------------------------Router on stick
+enable
+configure terminal
+int gig0/2
+no shutdown 
+exit
+int gig0/2.50
+description Gateway VLAN 50
+encapsulation  dot1Q 50
+ip address 192.168.56.1 255.255.255.128
+exit
+int gig0/2.60
+description Gateway VLAN 60
+encapsulation  dot1Q 60
+ip address 192.168.56.129 255.255.255.128
+exit
+COPY Running-config Startup-config
+
+
+--------------------------------------------Router4-----------------------------------------
+--------------------------------------------Puertos
+ena
+conf t
+int gig0/1
+no shutdown
+ip address 15.15.15.1 255.255.255.252
+exit
+--------------------------------------------Protocolos
+ena
+conf t
+router eigrp 100
+network 15.15.15.0 0.0.0.3
+network 192.168.56.135 0.0.0.127
+exit
+--------------------------------------------Router on stick
+enable
+configure terminal
+int gig0/2
+no shutdown 
+exit
+int gig0/2.50
+description Gateway VLAN 50
+encapsulation  dot1Q 50
+ip address 192.168.56.1 255.255.255.128
+exit
+int gig0/2.60
+description Gateway VLAN 60
+encapsulation  dot1Q 60
+ip address 192.168.56.129 255.255.255.128
+exit
+COPY Running-config Startup-config
+
+--------------------------------------------Switch1-----------------------------------------
+--------------------------------------------VTP
+ena
+conf t
+vtp mode client
+vtp domain g6
+vtp password g6
+exit
+show vtp status
+copy running-config startup-config
+--------------------------------------------PUERTOS
+ena
+conf t
+interface F0/1
+switchport mode access
+switchport access vlan 50
+switchport nonegotiate
+exit
+interface F0/2
+switchport mode access
+switchport access vlan 50
+switchport nonegotiate
+exit
+interface F0/3
+switchport mode trunk
+switchport trunk allowed vlan all
+switchport nonegotiate
+exit
+interface F0/4
+switchport mode trunk
+switchport trunk allowed vlan all
+switchport nonegotiate
+exit
+
+--------------------------------------------Switch2-----------------------------------------
+--------------------------------------------VTP
+ena
+conf t
+vtp mode client
+vtp domain g6
+vtp password g6
+exit
+show vtp status
+copy running-config startup-config
+--------------------------------------------PUERTOS
+ena
+conf t
+interface F0/1
+switchport mode access
+switchport access vlan 60
+switchport nonegotiate
+exit
+interface F0/2
+switchport mode access
+switchport access vlan 60
+switchport nonegotiate
+exit
+interface F0/3
+switchport mode trunk
+switchport trunk allowed vlan all
+switchport nonegotiate
+exit
+interface F0/4
+switchport mode trunk
+switchport trunk allowed vlan all
+switchport nonegotiate
+exit
+
+--------------------------------------------Switch3-----------------------------------------
+--------------------------------------------VLAN
+ena
+configure terminal
+vlan 50
+name DesarrolloEmpresarial
+exit
+vlan 60
+name DesarrolloEconomico
+exit
+--------------------------------------------VTP
+ena
+conf t
+vtp mode server
+vtp domain g6
+vtp password g6
+exit
+show vtp status
+copy running-config startup-config
+--------------------------------------------PUERTOS
+ena
+conf t
+interface F0/1
+switchport mode trunk
+switchport trunk allowed vlan all
+switchport nonegotiate
+exit
+interface F0/2
+switchport mode trunk
+switchport trunk allowed vlan all
+switchport nonegotiate
+exit
