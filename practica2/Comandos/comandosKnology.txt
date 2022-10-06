@@ -127,6 +127,20 @@ router ospf 100
 network 14.14.14.0 0.0.0.3 area 0
 network 192.168.56.5 0.0.0.127 area 0
 exit
+--------------------------------------------Acces-List
+ena
+conf t
+access-list 105 permit tcp 192.168.56.1 0.0.0.127 192.168.56.129 0.0.0.127
+int gig0/2
+ip access-group 105 in
+exit
+access-list 10 deny 192.168.26.0 0.0.0.127
+access-list 10 deny 192.168.26.128 0.0.0.127
+access-list 10 deny 192.168.86.0 0.0.0.127
+access-list 10 deny 192.168.86.128 0.0.0.127
+int gig0/2
+ip access-group 10 out
+exit
 
 --------------------------------------------Router4-----------------------------------------
 --------------------------------------------Puertos
@@ -146,6 +160,20 @@ conf t
 router eigrp 200
 network 15.15.15.0 0.0.0.3
 network 192.168.56.135 0.0.0.127
+exit
+--------------------------------------------Acces-List
+ena
+conf t
+access-list 105 permit tcp 192.168.56.128 0.0.0.127 192.168.56.0 0.0.0.127
+int gig0/2
+ip access-group 105 in
+exit
+access-list 10 deny 192.168.26.0 0.0.0.127
+access-list 10 deny 192.168.26.128 0.0.0.127
+access-list 10 deny 192.168.86.0 0.0.0.127
+access-list 10 deny 192.168.86.128 0.0.0.127
+int gig0/2
+ip access-group 10 out
 exit
 
 --------------------------------------------Switch1-----------------------------------------
@@ -204,12 +232,12 @@ ena
 conf t
 interface F0/1
 switchport mode access
-switchport access vlan 60
+switchport access vlan 1
 switchport nonegotiate
 exit
 interface F0/2
 switchport mode access
-switchport access vlan 60
+switchport access vlan 1
 switchport nonegotiate
 exit
 interface F0/3
