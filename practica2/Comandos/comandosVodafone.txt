@@ -132,53 +132,15 @@ network 192.168.26.0 0.0.0.127 area 0
 exit
 exit
 wr
-.......................................Router on a stick..........................................
-enable
-configure terminal
-int gig0/1
-no shutdown 
-exit
-int gig0/1.10
-description Gateway VLAN 10
-encapsulation  dot1Q 10
-ip address 192.168.86.129 255.255.255.128
-exit
-int gig0/1.20
-description Gateway VLAN 20
-encapsulation  dot1Q 20
-ip address 192.168.26.1 255.255.255.128
-exit
-int gig0/1.30
-description Gateway VLAN 30
-encapsulation  dot1Q 30
-ip address 192.168.86.1 255.255.255.128
-exit
-int gig0/1.40
-description Gateway VLAN 40
-encapsulation  dot1Q 40
-ip address 192.168.26.129 255.255.255.128
-exit
-int gig0/1.50
-description Gateway VLAN 50
-encapsulation  dot1Q 50
-ip address 192.168.56.1 255.255.255.128
-exit
-int gig0/1.60
-description Gateway VLAN 60
-encapsulation  dot1Q 60
-ip address 192.168.56.129 255.255.255.128
-exit
-exit
-COPY Running-config Startup-config
 ......................................ACCESS LIST.............................................
 ...............................se usaran extendidas id 100-199................................
 ...............................CulturaYDeporte, Salud, Educacion.............................................
 enable
-configure terminal 
-access-list 105 permit tcp 192.168.26.1 0.0.0.127 192.168.26.0 0.0.0.127
-no access-list 105 deny ip any any
-int gig0/0
-ip access-group 105 in
+conf t
+access-list 20 permit 192.168.26.128 0.0.0.127
+access-list 20 deny any
+interface gig0/1
+ip access-group 20 out
 exit
 exit
 wr
@@ -217,55 +179,17 @@ default-information originate
 exit 
 exit
 wr
-.......................................Router on a stick..........................................
-enable
-configure terminal
-int gig0/0
-no shutdown 
-exit
-int gig0/0.10
-description Gateway VLAN 10
-encapsulation  dot1Q 10
-ip address 192.168.86.129 255.255.255.128
-exit
-int gig0/0.20
-description Gateway VLAN 20
-encapsulation  dot1Q 20
-ip address 192.168.26.1 255.255.255.128
-exit
-int gig0/0.30
-description Gateway VLAN 30
-encapsulation  dot1Q 30
-ip address 192.168.86.1 255.255.255.128
-exit
-int gig0/0.40
-description Gateway VLAN 40
-encapsulation  dot1Q 40
-ip address 192.168.26.129 255.255.255.128
-exit
-int gig0/0.50
-description Gateway VLAN 50
-encapsulation  dot1Q 50
-ip address 192.168.56.1 255.255.255.128
-exit
-int gig0/0.60
-description Gateway VLAN 60
-encapsulation  dot1Q 60
-ip address 192.168.56.129 255.255.255.128
-exit
-exit
-COPY Running-config Startup-config
 ......................................ACCESS LIST.............................................
 ...............................se usaran extendidas id 100-199................................
 ...............................CulturaYDeporte, Salud, Educacion.............................................
 enable
-configure terminal 
-access-list 105 permit tcp 192.168.26.128 0.0.0.127 192.168.26.0 0.0.0.127
-access-list 105 permit tcp 192.168.26.128 0.0.0.127 192.168.86.0 0.0.0.127 
-access-list 105 permit tcp 192.168.26.128 0.0.0.127 192.168.56.5 0.0.0.127 
-no access-list 105 deny ip any any
-int gig0/0
-ip access-group 105 in
+configure terminal
+access-list 10 permit 192.168.26.0 0.0.0.127
+access-list 10 permit 192.168.86.0 0.0.0.127 
+access-list 10 permit 192.168.86.128 0.0.0.127 
+access-list 10 deny any
+interface gig0/0
+ip access-group 10 out
 exit
 exit
 wr
@@ -294,7 +218,7 @@ switchport trunk allowed vlan all
 exit
 int range fastethernet 0/2 - 4
 switchport mode access 
-switchport access vlan 20
+switchport access vlan 1
 exit	
 exit
 wr
@@ -322,7 +246,8 @@ switchport trunk allowed vlan all
 exit
 int range fastethernet 0/2 - 3
 switchport mode access 
-switchport access vlan 40
+switchport access vlan 1
 exit
 exit
 wr
+
