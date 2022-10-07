@@ -14,9 +14,9 @@ Se realiza el calculo para obtener las Sub redes necesarias, teniendo en cuenta 
 
 | VLAN                | SubRed         | Pimer Asignable | Ultima Asignable | Broadcast      | MascaraSubred        |
 | ------              | ------         | ------          | ------           | ------         | ------               |
-| Educacion 10 |    |    |    |    |    |
+| Educacion 10 |   192.168.86.128  |  192.168.86.129   |  192.168.86.254  |  192.168.26.255 | 255.255.255.128 / 25 |
 | Cultura y deportes 20 | 192.168.26.0  | 192.168.26.1  | 192.168.26.126    | 192.168.26.127  | 255.255.255.128 / 25 |
-| Salud 30 |    |    |    |    |    |
+| Salud 30 |  192.168.86.0  |  192.168.86.1  |  192.168.86.126  |  192.168.26.127   |  255.255.255.128 / 25  |
 | Funcion Publica 40 | 192.168.26.128  | 192.168.26.129   | 192.168.26.254   | 192.168.26.255 | 255.255.255.128 / 25 |
 | Desarrollo Empresarial 50 |    |    |    |    |    |
 | Desarrollo Económico 60 |    |    |    |    |    |
@@ -166,3 +166,438 @@ exit
 copy running-config startup-config
 ```
 ---
+
+---
+## _ISP Telefonica_
+
+### Configuraciones para sw 1.
+
+```sh
+ena
+conf t
+vtp mode client
+vtp domain g6
+vtp password g6
+
+int f0/1
+sw mode trunk
+sw trunk allowed vlan all
+
+int f0/2
+sw mode access
+switchport access vlan 1
+exit
+
+int f0/3
+sw mode access
+switchport access vlan 1
+exit
+```
+
+### Configuraciones para sw 2.
+
+```sh
+ena
+conf t
+vtp mode client
+vtp domain g6
+vtp password g6
+
+int f0/1
+sw mode trunk
+sw trunk allowed vlan all
+exit
+
+int f0/2
+switchport access vlan 10
+exit
+
+int f0/3
+switchport access vlan 10
+exit
+```
+
+### Configuraciones para sw 3.
+
+```sh
+enable
+configure terminal
+int range f0/1 - 4
+sw mode trunk
+sw trunk allowed vlan all
+exit
+```
+
+### Configuraciones para router 1.
+
+```sh
+
+enable
+configure terminal
+int gig0/0
+no shutdown
+ip address 5.5.5.1 255.255.255.252
+exit
+
+
+enable
+configure terminal
+int gig0/1
+no shutdown
+ip address 2.2.2.2 255.255.255.252
+exit
+
+enable
+configure terminal
+int gig0/2
+no shutdown
+ip address 4.4.4.2 255.255.255.252
+exit
+
+enable
+configure terminal
+int serial0/2/0
+no shutdown
+ip address 8.8.8.1 255.255.255.252
+exit
+
+.......................................RIP..........................................
+enable
+configure terminal
+router rip 
+version 2
+no auto-summary
+network 5.5.5.0
+exit
+
+enable
+configure terminal
+router eigrp 200
+network 8.8.8.0 0.0.0.3
+network 4.4.4.0 0.0.0.3
+network 2.2.2.0 0.0.0.3
+exit
+exit
+wr
+
+enable
+configure terminal
+router rip 
+default-information originate
+exit 
+exit
+wr
+
+.......................................Redistribucion rip-eigrp..........................................
+enable
+configure terminal
+router eigrp 200
+redistribute rip metric 255 1 1 1 1
+exit
+router rip 
+redistribute eigrp 200 metric 15
+exit
+exit
+wr
+```
+
+### Configuraciones para router 2.
+
+```sh
+
+enable
+configure terminal
+int gig0/2
+no shutdown
+ip address 4.4.4.1 255.255.255.252
+exit
+
+int gig0/1
+no shutdown
+ip address 3.3.3.1 255.255.255.252
+exit
+
+int gig0/0
+no shutdown
+ip address 6.6.6.1 255.255.255.252
+exit
+
+enable
+configure terminal
+int serial0/2/0
+no shutdown
+ip address 7.7.7.2 255.255.255.252
+exit
+
+.......................................EIGRP..........................................
+enable
+configure terminal
+router eigrp 200
+network 4.4.4.0 0.0.0.3
+exit
+exit
+wr
+
+configure terminal
+router rip 
+version 2
+no auto-summary
+network 6.6.6.0
+network 7.7.7.0
+network 3.3.3.0 
+exit
+
+enable
+configure terminal
+router rip 
+default-information originate
+exit 
+exit
+wr
+
+```
+
+### Configuraciones para router 3.
+
+```sh
+enable
+configure terminal
+int gig0/0
+ip address 192.168.86.1 255.255.255.128
+no shutdown
+exit
+
+int gig0/2
+no shutdown
+ip address 1.1.1.1 255.255.255.252
+exit
+
+int gig0/1
+no shutdown
+ip address 2.2.2.1 255.255.255.252
+exit
+
+
+int g0/0.10
+encapsulation dot1Q 10
+ip address 192.168.86.129 255.255.255.128
+no shutdown
+exit
+
+int g0/0.30
+encapsulation dot1Q 30
+ip address 192.168.86.1 255.255.255.128
+no shutdown
+exit
+
+int g0/0.40
+encapsulation dot1Q 40
+ip address 192.168.26.129 255.255.255.128
+no shutdown
+exit
+
+int g0/0.20
+encapsulation dot1Q 20
+ip address 192.168.26.1 255.255.255.128
+no shutdown
+exit
+
+
+enable
+configure terminal
+int serial0/2/0
+no shutdown
+ip address 7.7.7.1 255.255.255.252
+exit
+
+.......................................RIP..........................................
+enable
+configure terminal
+router rip 
+version 2
+no auto-summary
+network 1.1.1.0
+network 7.7.7.0
+network 192.168.86.0
+exit
+
+enable
+configure terminal
+router eigrp 200
+network 2.2.2.0 0.0.0.3
+exit
+exit
+wr
+
+enable
+configure terminal
+router rip 
+default-information originate
+exit 
+exit
+wr
+
+```
+
+### Configuraciones para router 4.
+
+```sh
+
+enable
+configure terminal
+int gig0/0
+ip address 192.168.86.129 255.255.255.128
+no shutdown
+exit
+
+int gig0/2
+no shutdown
+ip address 1.1.1.2 255.255.255.252
+exit
+
+int gig0/1
+no shutdown
+ip address 3.3.3.2 255.255.255.252
+exit
+
+enable
+configure terminal
+int serial0/2/0
+no shutdown
+ip address 8.8.8.2 255.255.255.252
+exit
+
+config t
+
+int g0/0.10
+encapsulation dot1Q 10
+ip address 192.168.86.129 255.255.255.128
+no shutdown
+exit
+
+
+.......................................EIGRP..........................................
+ena
+config t
+router eigrp 200
+network 8.8.8.0 0.0.0.3
+exit
+exit
+wr
+config t
+router rip
+version 2
+network 192.168.86.0
+network 1.1.1.0
+network 3.3.3.0
+exit
+
+```
+
+### Configuraciones para router 5.
+
+```sh
+int g0/0
+no sw
+ip address 5.5.5.2 255.255.255.252
+no shutdown
+exit
+
+int g0/1
+no sw
+ip address 6.6.6.2 255.255.255.252
+no shutdown
+exit
+
+int g0/2
+no sw
+ip address 9.9.9.1 255.255.255.252
+no shutdown
+exit
+
+config t
+router eigrp 200	
+network 9.9.9.0 0.0.0.3
+exit
+exit
+
+enable
+configure terminal
+router rip 
+version 2
+no auto-summary
+network 5.5.5.0
+network 6.6.6.0
+exit
+
+.......................................Redistribucion rip-eigrp..........................................
+enable
+configure terminal
+router eigrp 200
+redistribute rip metric 255 1 1 1 1
+exit
+router rip 
+redistribute eigrp 200 metric 15
+exit
+exit
+wr
+```
+
+### Confguraciones router bgp.
+
+```sh
+
+ena
+config t
+int g0/1
+ip address 9.9.9.2 255.255.255.252
+no shutdown
+exit
+
+int g0/0
+ip address 24.24.24.2 255.255.255.252
+no shutdown
+exit
+
+config t
+router eigrp 200	
+network 9.9.9.0 0.0.0.3
+exit
+exit
+
+.......................................configuracion rip con bgp..........................................
+enable
+configure terminal
+router bgp 100
+network 24.24.24.0 mask 255.255.255.252
+neighbor 24.24.24.1 remote-as 200
+redistribute eigrp 200
+exitexit
+router eigrp 200
+redistribute bgp 100 metric 1 1 1 1 1
+exit
+exit
+wr
+```
+
+### access list router 3.
+```sh
+enable
+conf t
+access-list 6 permit 192.168.86.128 0.0.0.7
+access-list 6 permit 192.168.26.128 0.0.0.7
+access-list 6 deny any
+interface gig0/0
+ip access-group 6 OUT
+```
+
+### access list router 4
+```sh
+enable
+conf t
+access-list 5 permit 192.168.86.0 0.0.0.7
+access-list 5 permit 192.168.26.128 0.0.0.7
+access-list 5 deny any
+interface gig0/0
+ip access-group 5 OUT
+```
