@@ -18,8 +18,8 @@ Se realiza el calculo para obtener las Sub redes necesarias, teniendo en cuenta 
 | Cultura y deportes 20 | 192.168.26.0  | 192.168.26.1  | 192.168.26.126    | 192.168.26.127  | 255.255.255.128 / 25 |
 | Salud 30 |  192.168.86.0  |  192.168.86.1  |  192.168.86.126  |  192.168.26.127   |  255.255.255.128 / 25  |
 | Funcion Publica 40 | 192.168.26.128  | 192.168.26.129   | 192.168.26.254   | 192.168.26.255 | 255.255.255.128 / 25 |
-| Desarrollo Empresarial 50 |    |    |    |    |    |
-| Desarrollo Económico 60 |    |    |    |    |    |
+|Desarrollo Empresarial 50|192.168.56.0|192.168.56.1|192.168.56.126|192.168.56.127|255.255.255.128 / 25|
+| Desarrollo Económico 60 |192.168.56.128|192.168.56.129|192.168.56.254|192.168.56.255|255.255.255.128 / 25|
 ---
 ## _ISP Vodafone_
 
@@ -600,4 +600,307 @@ access-list 5 permit 192.168.26.128 0.0.0.7
 access-list 5 deny any
 interface gig0/0
 ip access-group 5 OUT
+```
+
+---
+
+---
+## _ISP Knology_
+#### Configuracion de Interfaces router BGP
+```sh
+enable 
+configure terminal
+int gig0/1
+no shutdown
+ip address 11.11.11.2 255.255.255.252
+exit
+int gig0/2
+no shutdown
+ip address 25.25.25.2 255.255.255.252
+exit
+exit
+copy running-config startup-config
+```
+#### Configuracion de Protocolos de enrutamiento (BGP y OSPF) router BGP
+```sh
+enable
+configure terminal
+router ospf 103
+network 11.11.11.0 0.0.0.3 area 0
+exit
+router bgp 300
+network 25.25.25.0 mask 255.255.255.252
+neighbor 25.25.25.1 remote-as 200
+exit
+exit
+copy running-config startup-config
+```
+#### Configuracion de Distribucion de rutas router BGP
+```sh
+enable
+configure terminal
+router bgp 300
+redistribute ospf 103
+exit
+router ospf 103
+redistribute bgp 300 metric 1 subnets 
+exit
+exit
+copy running-config startup-config
+```
+#### Configuracion de Interfaces router 0
+```sh
+ena
+conf t
+int gig0/0
+no shutdown
+ip address 12.12.12.2 255.255.255.252
+exit
+int gig0/1
+no shutdown
+ip address 13.13.13.2 255.255.255.252
+exit
+int gig0/2
+no shutdown
+ip address 11.11.11.1 255.255.255.252
+exit
+exit
+copy running-config startup-config
+```
+#### Configuracion de Protocolos de enrutamiento (EIGRP y OSPF) router 0
+```sh
+ena
+conf t
+router ospf 102
+network 11.11.11.0 0.0.0.3 area 0
+network 12.12.12.0 0.0.0.3 area 0
+exit
+router eigrp 200
+network 13.13.13.0 0.0.0.3
+exit
+exit
+copy running-config startup-config
+```
+#### Configuracion de Distribucion de rutas router 0
+```sh
+ena
+conf t
+router eigrp 200
+redistribute ospf 102 metric 1 1 1 1 1
+exit
+router ospf 102
+redistribute eigrp 200 metric 15 subnets
+exit
+exit
+copy running-config startup-config
+```
+#### Configuracion de Interfaces router 1
+```sh
+ena
+conf t
+int gig0/0
+no shutdown
+ip address 12.12.12.1 255.255.255.252
+exit
+int gig0/1
+no shutdown
+ip address 14.14.14.2 255.255.255.252
+exit
+exit
+copy running-config startup-config
+```
+#### Configuracion de Protocolos de enrutamiento (OSPF) router 1
+```sh
+ena
+conf t
+router ospf 101
+network 12.12.12.0 0.0.0.3 area 0
+network 14.14.14.0 0.0.0.3 area 0
+exit
+exit
+copy running-config startup-config
+```
+#### Configuracion de Interfaces router 2
+```sh
+ena
+conf t
+int gig0/0
+no shutdown
+ip address 13.13.13.1 255.255.255.252
+exit
+int gig0/1
+no shutdown
+ip address 15.15.15.2 255.255.255.252
+exit
+exit
+copy running-config startup-config
+```
+#### Configuracion de Protocolos de enrutamiento (EIGRP) router 2
+```sh
+ena
+conf t
+router eigrp 200
+network 13.13.13.0 0.0.0.3
+network 15.15.15.0 0.0.0.3
+exit
+exit
+copy running-config startup-config
+```
+#### Configuracion de Interfaces router 3
+```sh
+ena
+conf t
+int gig0/1
+no shutdown
+ip address 14.14.14.1 255.255.255.252
+exit
+int gig0/2
+no shutdown
+ip address 192.168.56.1 255.255.255.128
+exit
+exit
+copy running-config startup-config
+```
+#### Configuracion de Protocolos de enrutamiento (OSPF) router 3
+```sh
+ena
+conf t
+router ospf 100
+network 14.14.14.0 0.0.0.3 area 0
+network 192.168.56.5 0.0.0.127 area 0
+exit
+exit
+copy running-config startup-config
+```
+#### Configuracion de Acces-List router 3
+```sh
+ena
+conf t
+access-list 5 permit 192.168.56.128 0.0.0.127
+access-list 5 deny any
+interface gig0/2
+ip access-group 5 OUT
+exit
+exit
+copy running-config startup-config
+```
+#### Configuracion de Interfaces router 4
+```sh
+ena
+conf t
+int gig0/1
+no shutdown
+ip address 15.15.15.1 255.255.255.252
+exit
+int gig0/2
+no shutdown
+ip address 192.168.56.129 255.255.255.128
+exit
+exit
+copy running-config startup-config
+```
+#### Configuracion de Protocolos de enrutamiento (EIGRP) router 4
+```sh
+ena
+conf t
+router eigrp 200
+network 15.15.15.0 0.0.0.3
+network 192.168.56.135 0.0.0.127
+exit
+exit
+copy running-config startup-config
+```
+#### Configuracion de Acces-List router 4
+```sh
+ena
+conf t
+access-list 5 permit 192.168.56.0 0.0.0.127
+access-list 5 deny any
+interface gig0/2
+ip access-group 5 OUT
+exit
+exit
+copy running-config startup-config
+```
+#### Configuracion de VLAN Switch 1
+```sh
+ena
+configure terminal
+vlan 50
+name DesarrolloEmpresarial
+exit
+copy running-config startup-config
+```
+#### Configuracion de VTP Switch 1
+```sh
+ena
+conf t
+vtp mode server
+vtp domain g6
+vtp password g6
+exit
+copy running-config startup-config
+```
+#### Configuracion de Puertos Switch 1
+```sh
+ena
+conf t
+interface F0/1
+switchport mode access
+switchport access vlan 1
+switchport nonegotiate
+exit
+interface F0/2
+switchport mode access
+switchport access vlan 1
+switchport nonegotiate
+exit
+interface F0/3
+switchport mode trunk
+switchport trunk allowed vlan all
+switchport nonegotiate
+exit
+exit
+copy running-config startup-config
+```
+#### Configuracion de VLAN Switch 2
+```sh
+ena
+configure terminal
+vlan 60
+name DesarrolloEconomico
+exit
+copy running-config startup-config
+```
+#### Configuracion de VTP Switch 2
+```sh
+ena
+conf t
+vtp mode server
+vtp domain g6
+vtp password g6
+exit
+copy running-config startup-config
+```
+#### Configuracion de Puertos Switch 2
+```sh
+ena
+conf t
+interface F0/1
+switchport mode access
+switchport access vlan 1
+switchport nonegotiate
+exit
+interface F0/2
+switchport mode access
+switchport access vlan 1
+switchport nonegotiate
+exit
+interface F0/3
+switchport mode trunk
+switchport trunk allowed vlan all
+switchport nonegotiate
+exit
+exit
+copy running-config startup-config
 ```
