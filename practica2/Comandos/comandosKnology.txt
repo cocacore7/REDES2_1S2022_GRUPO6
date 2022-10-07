@@ -130,16 +130,10 @@ exit
 --------------------------------------------Acces-List
 ena
 conf t
-access-list 105 permit tcp 192.168.56.1 0.0.0.127 192.168.56.129 0.0.0.127
-int gig0/2
-ip access-group 105 in
-exit
-access-list 10 deny 192.168.26.0 0.0.0.127
-access-list 10 deny 192.168.26.128 0.0.0.127
-access-list 10 deny 192.168.86.0 0.0.0.127
-access-list 10 deny 192.168.86.128 0.0.0.127
-int gig0/2
-ip access-group 10 out
+access-list 5 permit 192.168.56.128 0.0.0.127
+access-list 5 deny any
+interface gig0/2
+ip access-group 5 OUT
 exit
 
 --------------------------------------------Router4-----------------------------------------
@@ -164,16 +158,10 @@ exit
 --------------------------------------------Acces-List
 ena
 conf t
-access-list 105 permit tcp 192.168.56.128 0.0.0.127 192.168.56.0 0.0.0.127
-int gig0/2
-ip access-group 105 in
-exit
-access-list 10 deny 192.168.26.0 0.0.0.127
-access-list 10 deny 192.168.26.128 0.0.0.127
-access-list 10 deny 192.168.86.0 0.0.0.127
-access-list 10 deny 192.168.86.128 0.0.0.127
-int gig0/2
-ip access-group 10 out
+access-list 5 permit 192.168.56.0 0.0.0.127
+access-list 5 deny any
+interface gig0/2
+ip access-group 5 OUT
 exit
 
 --------------------------------------------Switch1-----------------------------------------
