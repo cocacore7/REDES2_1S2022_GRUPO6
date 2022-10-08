@@ -904,3 +904,85 @@ exit
 exit
 copy running-config startup-config
 ```
+---
+
+---
+## _Migracion IPV6_
+#### Migracion IPV4 a IPV6
+```sh
+###### Router 1 ######
+enabled
+conf t
+ipv6 unicast-routing
+ipv6 router rip redv6
+exit
+int gig0/1
+ipv6 address 2001:DB8:A:1::1/64
+ipv6 rip redv6 enable
+no shutdown
+exit
+int gig0/0
+ipv6 address 2001:DB8:B:1::1/64
+ipv6 rip redv6 enable
+no shutdown
+exit
+copy running-config startup-config
+
+###### Router 2 ######
+enable
+conf t
+ipv6 unicast-routing
+ipv6 router rip redv6
+exit
+int gig0/2
+ipv6 address 2001:db8:B:1::2/64
+ipv6 rip redv6 enable
+no shutdown
+exit
+interface Tunel0
+ipv6 address 3000::1/112
+ipv6 rip redv6 enable
+tunnel source gig0/0
+tunnel destination 25.25.25.2 
+tunnel mode ipv6ip
+exit
+copy running-config startup-config
+
+###### Router 3 ######
+enable
+conf t
+ipv6 unicast-routing
+ipv6 router rip redv6
+exit
+int gig0/0
+ipv6 address 2001:DB8:B:2::2/64
+ipv6 rip redv6 enable
+no shutdown
+exit
+int Tunnel10
+ipv6 address 3000::2/112
+ipv6 rip redv6 enable
+tunnel source gig0/0
+tunnel detination 24.24.24.2
+tunnel mode ipv6ip
+exit
+copy running-config startup-config
+
+###### Router 4 ######
+ena
+conf t
+ipv6 unicast-routing
+ipv6 router rip redv6
+exit
+int gig0/0
+ipv6 address 2001:DB8:B:2::1/64
+ipv6 rip redv6 enable
+no shutdown
+exit
+int gig0/1
+ipv6 address 2001:B8:A:2::1/64
+ipv6 rip redv6 enable
+no shutdown
+exit
+copy running-config startup-config
+```
