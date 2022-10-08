@@ -1,0 +1,111 @@
+###### Router 1 ######
+enabled
+conf t
+ipv6 unicast-routing
+int gig0/0
+ipv6 adress 2001:DB8:A:1::1/64
+exit
+ipv6 router rip redv6
+exit
+int gig0/0
+ipv6 rip redv6 enable
+exit
+int gig0/1
+ipv6  address 2001:DB8:B:1::1/64
+ipv6 rip redv6 enable
+exit
+int gig0/0
+no shutdown
+exit
+int gig0/1
+no shutdown
+exit
+
+###### Router 2 ######
+enable
+conf t
+ipv6 unicast-routing
+ipv6 router rip redv6
+exit
+int gig0/0
+ipv6 address 2001:db8:B:1::2/64
+ip´v6 rip redv6 enable
+no shutdown
+exit
+int gig0/1
+ip adress 192.168.1.1 255.255.255.252
+no shutdown
+exit
+interface Tunel0
+ipv6 address 3000::1/112
+ipv6 rip redv6 enable
+tunnel source gig0/1
+tunnel destination 192.168.1.6 
+tunnedl mode ipv6ip
+exit
+router ospf 1
+router-id 1.1.1.1
+network 192.168.1.0 0.0.0.3 area 0
+exit
+
+
+###### Router 3 ######
+enable
+conf t
+int gig0/0
+ip adress 192.168.1.2 255.255.255.252
+no shutdown
+exit
+int gig0/1
+ip adress 192.168.1.5 255.255.255.252
+no shutdown
+exit
+router ospf 1
+router-id 2.2.2.2
+network 192.168.1.0 0.0.0.3 area 0
+network 192.168.1.4 0.0.0.3 area 0
+exit
+
+###### Router 4 ######
+enable
+conf t
+ipv6 unicast-routing
+int gig0/0
+ip adress 192.168.1.6 255.255.255.252
+no shutdown
+exit
+router ospf 1
+router-id 3.3.3.3
+network 192.168.1.4 0.0.0.3 area 0
+exit
+ipv6 router rip redv6
+exit
+int gig0/1
+ipv6 address 2001:DB8:B:2::2/64
+ipv6 rip redv6 enable
+no shutdown
+exit
+int Tunnel10
+ipv6 adress 3000::2/112
+ipv6 rip redv6 enable
+tunnel source gig0/0
+tunnel detination 192.168.1.1
+tunnel mode ipv6ip
+exit
+
+###### Router 5 ######
+ena
+conf t
+ipv6 unicast-routing
+ipv6 router rip redv6
+exit
+int gig0/0
+ipv6 address 2001:DB8:B:2::1/64
+ipv6 rip redv6 enable
+no shutdown
+exit
+int gig0/1
+ipv6 adress 2001:B8:A:2::1/64
+ipv6 rip redv6 enable
+no shutdown
+exit
