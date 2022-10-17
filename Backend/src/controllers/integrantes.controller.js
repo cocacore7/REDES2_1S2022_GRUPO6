@@ -1,25 +1,13 @@
-async function addIntegrante(req, res){
-    const {Carne,Nombres, Apellidos, FechaNac}  = req.body
-    if (!Carne || !Nombres || !Apellidos || !FechaNac){
-        return res.status(400).send({Resultado: 'Hace falta uno o mas parametros'})
-    }
-
-    const params = [Carne,Nombres,Apellidos,FechaNac]
-    //const respuesta = await conexion.execute_sp('AgregarAmigo',params)
-    //return res.status(200).send(respuesta.result[0][0])  
-    return res.status(200).send({Resultado: params})    
-}
+var InegranteSchema = require('../models/Integrantes.model')
 
 async function getIntegrantes(req, res){
-    const {Carne,Nombres, Apellidos, FechaNac}  = req.body
-    if (Carne || Nombres || Apellidos || FechaNac){
-        return res.status(400).send({Resultado: 'Hace falta uno o mas parametros'})
-    }
+    InegranteSchema.find((err, integrantes) => {
+        if(err){
+            return res.status(404).send()
+        }
 
-    const params = [Carne,Nombres,Apellidos,FechaNac]
-    //const respuesta = await conexion.execute_sp('AgregarAmigo',params)
-    //return res.status(200).send(respuesta.result[0][0])  
-    return res.status(200).send({Resultado: params})    
+        return res.status(200).send({ integrantes })
+    })
 }
 
 async function getIntegrante(req, res){
@@ -28,14 +16,16 @@ async function getIntegrante(req, res){
         return res.status(400).send({Resultado: 'Hace falta uno o mas parametros'})
     }
 
-    const params = [Carne]
-    //const respuesta = await conexion.execute_sp('AgregarAmigo',params)
-    //return res.status(200).send(respuesta.result[0][0])  
-    return res.status(200).send({Resultado: params})    
+    InegranteSchema.findById(Carne, (err, integrante) => {
+        if(err){
+            return res.status(404).send()
+        }
+
+        return res.status(200).send({ integrante })
+    }) 
 }
 
 module.exports = {
-    addIntegrante,
     getIntegrantes,
     getIntegrante
 }
