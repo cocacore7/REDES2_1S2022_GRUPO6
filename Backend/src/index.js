@@ -1,12 +1,15 @@
+const mongoose = require('mongoose');
 const app = require('./app');
-const conn = require('./database/conection')
 
-conn.conn();
+mongoose.Promise = global.Promise;
+mongoose.connect('mongodb://localhost:8080/dbRedes').then(() =>{
+    console.log('La base de datos esta en funcionamiento');
 
-//Settings
-const PORT = process.env.PORT || 3000;
+    //Settings
+    app.set('port', process.env.PORT || 3000);
 
-//Starting the server
-app.listen( PORT, () =>{
-    console.log(`server listening on ${PORT}`);
-});
+    //Starting the server
+    app.listen(app.get('port'), () => {
+        console.log(`server listening on '${app.get('port')}'`);
+    });
+}).catch(err => console.log(err));
