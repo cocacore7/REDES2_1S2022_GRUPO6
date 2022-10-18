@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const app = require('./app');
 
-const DB_URI = `mongodb://localhost:8080/dbRedes` 
+const DB_URI = `mongodb://44.207.1.109:27017/dbRedes` 
 const conn = () => {
     mongoose.connect(
         DB_URI,
