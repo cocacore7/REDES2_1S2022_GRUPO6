@@ -2,11 +2,11 @@ var mongoose = require('mongoose')
 
 var Schema = mongoose.Schema;
 
-var InegranteSchema = Schema({
-    Carne: Number,
+var IntegranteSchema = Schema({
+    Carne: String,
     Nombre: String,
     Apellido: String,
     FechaNac: String
 })
 
-module.exports = mongoose.model('integrante', InegranteSchema)
+module.exports = mongoose.model('integrante', IntegranteSchema)

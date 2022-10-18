@@ -1,7 +1,7 @@
 const bodParser = require('body-parser')
 const express = require('express');
 const morgan = require('morgan');
-//const cors = require('cors');
+const cors = require('cors');
 const app = express();
 
 //Imported routes
@@ -11,6 +11,7 @@ var route_integrantes = require('./routes/integrantes.route')
 app.use(bodParser.urlencoded({limit:'50mb', extended:true}))
 app.use(bodParser.json({limit:'50mb', extended:true}))
 app.use(morgan('dev'));
+app.use(cors());
 
 
 //routes
