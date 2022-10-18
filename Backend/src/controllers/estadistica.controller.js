@@ -1,16 +1,16 @@
-var EstadisticaSchema = require('../models/estadisticas.model')
+var EstadisticaSchema = require('../models/estadistica.model')
 
-async function getIntegrantes(req, res){
-    EstadisticaSchema.find((err, estadisticas) => {
+async function getEstadisticas(req, res){
+    EstadisticaSchema.find((err, estadistica) => {
         if(err){
             return res.status(404).send()
         }
 
-        return res.status(200).send({ estadisticas })
+        return res.status(200).send({ estadistica })
     })
 }
 
-async function getIntegrante(req, res){
+async function getEstadistica(req, res){
     const {Carne}  = req.body
     if (!Carne){
         return res.status(400).send({Resultado: 'Hace falta uno o mas parametros'})
@@ -26,6 +26,6 @@ async function getIntegrante(req, res){
 }
 
 module.exports = {
-    getIntegrantes,
-    getIntegrante
+    getEstadisticas,
+    getEstadistica
 }

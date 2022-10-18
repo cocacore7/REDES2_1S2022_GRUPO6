@@ -1,12 +1,12 @@
-var AdministradorSchema = require('../models/administradores.model')
+var AdministradorSchema = require('../models/administrador.model')
 
 async function getAdministradores(req, res){
-    AdministradorSchema.find((err, administradores) => {
+    AdministradorSchema.find((err, administrador) => {
         if(err){
             return res.status(404).send()
         }
 
-        return res.status(200).send({ administradores })
+        return res.status(200).send({ administrador })
     })
 }
 

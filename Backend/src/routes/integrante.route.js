@@ -1,4 +1,4 @@
-var controller = require('../controllers/integrantes.controller');
+var controller = require('../controllers/integrante.controller');
 var express = require('express')
 let api = express.Router()
 

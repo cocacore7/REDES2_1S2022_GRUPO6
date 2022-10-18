@@ -1,12 +1,12 @@
-var PhotoSchema = require('../models/photos.model')
+var PhotoSchema = require('../models/photo.model')
 
 async function getPhotos(req, res){
-    PhotoSchema.find((err, photos) => {
+    PhotoSchema.find((err, photo) => {
         if(err){
             return res.status(404).send()
         }
 
-        return res.status(200).send({ photos })
+        return res.status(200).send({ photo })
     })
 }
 
