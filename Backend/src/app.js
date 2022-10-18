@@ -22,7 +22,7 @@ app.get('/', (req, res) => {
     res.send('Hola mundo uwuwu');
 })
 
-app.use('/Adiministrador', route_administradores)
+app.use('/Administrador', route_administradores)
 app.use('/Estadistica', route_estadisticas)
 app.use('/Integrante', route_integrantes)
 app.use('/Photo', route_photos)
