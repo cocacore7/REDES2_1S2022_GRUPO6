@@ -6,7 +6,7 @@ var IntegranteSchema = Schema({
     Carne: String,
     Nombre: String,
     Apellido: String,
-    FechaNac: String
+    Foto: String
 })
 
 module.exports = mongoose.model('integrante', IntegranteSchema)

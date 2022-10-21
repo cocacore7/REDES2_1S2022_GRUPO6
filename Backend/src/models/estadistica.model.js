@@ -3,10 +3,10 @@ var mongoose = require('mongoose')
 var Schema = mongoose.Schema;
 
 var EstadisticaSchema = Schema({
-    Carne: Number,
-    Nombre: String,
-    Apellido: String,
-    FechaNac: String
+    name: Number,
+    Dolar: String,
+    UcronCoin: String,
+    Euro: String
 })
 
 module.exports = mongoose.model('estadistica', EstadisticaSchema)
