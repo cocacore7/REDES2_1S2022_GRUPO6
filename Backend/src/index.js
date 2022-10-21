@@ -1,8 +1,7 @@
 const mongoose = require('mongoose');
 const app = require('./app');
-const config = require('./config');
 
-const DB_URI = `mongodb://`+config.BD_HOST+`:27017/dbRedes` 
+const DB_URI = `mongodb://`+process.env.BD_HOST+`:27017/dbRedes` 
 const conn = () => {
     mongoose.connect(
         DB_URI,
