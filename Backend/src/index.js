@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const app = require('./app');
 
-const DB_URI = `mongodb://3.86.93.176:27017/dbRedes` 
+const DB_URI = `mongodb://3.82.215.219:27017/dbRedes` 
 const conn = () => {
     mongoose.connect(
         DB_URI,
