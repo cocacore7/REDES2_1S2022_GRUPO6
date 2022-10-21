@@ -8,7 +8,7 @@ export default function Developers() {
   const [datos, setDatos]=useState([]);
   useEffect(() => {
     async function obtener() {
-        let data = await axios.get("http://localhost:4000/Integrante/getAll")
+        let data = await axios.get("http://"+process.env.REACT_APP_BACKEND+":3000/Integrante/getAll")
         if (data === null || data === undefined){
             alert("no existen administradores")
         }else{

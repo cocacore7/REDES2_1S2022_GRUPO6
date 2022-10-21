@@ -7,7 +7,7 @@ export default function Administrador() {
   const [datos, setDatos]=useState([]);
   useEffect(() => {
     async function obtener() {
-        let data = await axios.get("http://localhost:4000/Administrador/getAll")
+        let data = await axios.get("http://"+process.env.REACT_APP_BACKEND+":3000/Administrador/getAll")
         if (data === null || data === undefined){
             alert("no existen administradores")
         }else{

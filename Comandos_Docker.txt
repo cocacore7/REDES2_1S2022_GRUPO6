@@ -8,4 +8,4 @@ docker push cocacore7/frontend_redes2_fase1
 
 //Correr Imagenes Docker
 sudo docker run --name backend_redes2_fase1 -p 4000:4000 -e "BD_HOST=ip_BD" -d cocacore7/backend_redes2_fase1 
-sudo docker run -d -p 8000:80 --name frontend_redes2_fase1 cocacore7/frontend_redes2_fase1 
+sudo docker run -d -p 8000:3000 -e "REACT_APP_BACKEND=ip_Backend" --name frontend_redes2_fase1 cocacore7/frontend_redes2_fase1 
