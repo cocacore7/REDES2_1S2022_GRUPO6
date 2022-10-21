@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
 const app = require('./app');
+const config = require('./config');
 
-const DB_URI = `mongodb://3.82.215.219:27017/dbRedes` 
+const DB_URI = `mongodb://`+config.BD_HOST+`:27017/dbRedes` 
 const conn = () => {
     mongoose.connect(
         DB_URI,
@@ -17,7 +18,7 @@ const conn = () => {
 conn();
 
 //Settings
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 4000;
 
 //Starting the server
 app.listen( PORT, () =>{

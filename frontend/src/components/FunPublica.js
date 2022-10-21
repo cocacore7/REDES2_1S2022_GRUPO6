@@ -7,7 +7,7 @@ export default function FunPublica() {
     <div><h1 className='Title'>Funcion Publica</h1>
     <div className='carta'>
         <Row xs={1} md={3} className="g-1">
-        {Array.from({ length: 4 }).map((_, idx) => (
+        {Array.from({ length: 6 }).map((_, idx) => (
           <Col>
             <div class="max-w-sm rounded overflow-hidden shadow-lg">
               <img class="w-full" src="https://www.cnet.com/a/img/resize/4a8a90a118b6a772996e8572fa684d077eed561f/hub/2022/04/21/37ff5ab8-0d18-4b25-a5cd-82045a0f4049/2022-acura-nsx-type-s-009.jpg?auto=webp&fit=crop&height=675&width=1200" alt="Sunset in the mountains"/>
