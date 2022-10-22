@@ -19,7 +19,7 @@ export default function Home() {
 
   return (
     <div >
-      <h1 className='Title'>Home</h1>
+      <h1 className='Title'>Home {process.env.EC}</h1>
       <div className='Carusel'>
         <Carousel>
         {Array.from(datos).map((value, idx) => (
