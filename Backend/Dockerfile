@@ -1,6 +1,6 @@
-FROM node:16.14
-WORKDIR /
+FROM node:19-alpine
+WORKDIR /backendNode
 COPY . .
 RUN npm install
 EXPOSE 4000
-CMD ["npm","start"]
+CMD ["node","index.js"] 
