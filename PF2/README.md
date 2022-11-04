@@ -26,7 +26,7 @@ Donde se utilizaron los siguientes servicios que aws nos proporciona:
 Estos son los permisos que tendran nuestras sub redes, ya sea para denegar o permitir trafico.
 
 
-<img width="650" height="" src="documentacion/acl.PNG">
+<img width="650" height="" src="documentacion/ACL.PNG">
 
 
 Son los permisos que traia por default nuestra VPC.
