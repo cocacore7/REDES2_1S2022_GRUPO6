@@ -24,15 +24,23 @@ Donde se utilizaron los siguientes servicios que aws nos proporciona:
 ### ACLS.
 
 Estos son los permisos que tendran nuestras sub redes, ya sea para denegar o permitir trafico.
+
+
 <img width="650" height="" src="documentacion/acl.PNG">
+
 
 Son los permisos que traia por default nuestra VPC.
 
 ### Security Groups.
 
 Estos son los permisos que nuestras ec2 tienen.
+
+
 <img width="650" height="" src="documentacion/SecurityGroup.PNG">
+
+
 <img width="650" height="" src="documentacion/Security.PNG">
+
 
 Basicamente aca se describen los permisos que nuestras ec2 tienen.
 
