@@ -13,6 +13,8 @@
 ### Arquitectura usada.
 Para el desarrollo de este proyecto se hizo uso de la siguiente arquitectura.
 <img width="650" height="" src="documentacion/arqui.PNG">
+
+
 Donde se utilizaron los siguientes servicios que aws nos proporciona:
 - Balanceador de cargas: Ese nos ayudó a conectar dos ec2 que contienen nuestra imagen de nuestro frontend.
 - EC2: Las cuales son las encargas del despliegue del frontend, backend y base de datos.
